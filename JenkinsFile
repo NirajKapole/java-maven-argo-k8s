@@ -6,12 +6,6 @@ pipeline {
     }
   }
   stages {
-    stage('Cloned the repo') {
-      steps {
-        sh 'echo passed'
-        //git branch: 'main', url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git'
-      }
-    }
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
