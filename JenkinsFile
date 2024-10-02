@@ -12,26 +12,6 @@ pipeline {
         //git branch: 'main', url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git'
       }
     }
-    stage('Checkout') {
-      steps {
-        // Ensure the repository is checked out correctly
-        checkout([$class: 'GitSCM',
-                  branches: [[name: '*/main']],
-                  userRemoteConfigs: [[url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git']]
-        ])
-        
-        // Verify the correct directory and list contents
-        sh 'pwd'
-        sh 'ls -la'
-      }
-    }
-    stage('Verify File') {
-      steps {
-        // Debugging to verify where deployment.yml is located
-        sh 'find . -name "deployment.yml"'
-        sh 'ls -la ./spring-boot-app-manifests/deployment.yml'
-      }
-    }
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
