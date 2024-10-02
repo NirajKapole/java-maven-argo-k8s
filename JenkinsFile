@@ -24,6 +24,12 @@ pipeline {
         sh 'ls -la'
       }
     }
+    stage('Verify File') {
+      steps {
+        // Debugging to verify where deployment.yml is located
+        sh 'find . -name "deployment.yml"'
+      }
+    }
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
