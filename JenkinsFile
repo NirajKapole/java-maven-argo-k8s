@@ -66,6 +66,8 @@ pipeline {
             sh '''
               git config --global user.email "nirajkapole6@gmail.com"
               git config --global user.name "NirajKapole"
+              git config --global --add safe.directory /var/lib/jenkins/workspace/ultimate
+              chmod 644 deployment.yml
               pwd  # Check if you are in the right directory
               ls -la  # Check if deployment.yml is present
               sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
