@@ -8,8 +8,10 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        sh 'echo passed'
-        //git branch: 'main', url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git'
+        // Ensure the Git repository is checked out
+        checkout scm
+        // OR use this if the repository details are not configured in Jenkins
+        // git branch: 'main', url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git'
       }
     }
     stage('Build and Test') {
