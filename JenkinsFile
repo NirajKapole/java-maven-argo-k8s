@@ -6,12 +6,22 @@ pipeline {
     }
   }
   stages {
+    stage('Cloned the repo') {
+      steps {
+        git branch: 'main', url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git'
+      }
+    }
     stage('Checkout') {
       steps {
-        // Ensure the Git repository is checked out
-        checkout scm
-        // OR use this if the repository details are not configured in Jenkins
-        // git branch: 'main', url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git'
+        // Ensure the repository is checked out correctly
+        checkout([$class: 'GitSCM',
+                  branches: [[name: '*/main']],
+                  userRemoteConfigs: [[url: 'https://github.com/NirajKapole/java-maven-argo-k8s.git']]
+        ])
+        
+        // Verify the correct directory and list contents
+        sh 'pwd'
+        sh 'ls -la'
       }
     }
     stage('Build and Test') {
@@ -45,8 +55,8 @@ pipeline {
         dir('java-maven-argo-k8s') { // Explicitly move to the Git directory
           withCredentials([string(credentialsId: 'git-cred', variable: 'GITHUB_TOKEN')]) {
             sh '''
-              git config user.email "nirajkapole6@gmail.com"
-              git config user.name "NirajKapole"
+              git config --global user.email "nirajkapole6@gmail.com"
+              git config --global user.name "NirajKapole"
               sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" spring-boot-app-manifests/deployment.yml
               git add spring-boot-app-manifests/deployment.yml
               git commit -m "Update deployment image to version ${BUILD_NUMBER}"
